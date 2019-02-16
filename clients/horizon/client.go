@@ -361,7 +361,6 @@ func (c *Client) stream(
 
 	client := http.Client{}
 
-	for {
 		req, err := http.NewRequest("GET", fmt.Sprintf("%s?%s", baseURL, query.Encode()), nil)
 		if err != nil {
 			return errors.Wrap(err, "Error creating HTTP request")
@@ -464,7 +463,7 @@ func (c *Client) stream(
 				}
 			}
 		}
-	}
+		return nil
 }
 
 // StreamLedgers streams incoming ledgers. Use context.WithCancel to stop streaming or
