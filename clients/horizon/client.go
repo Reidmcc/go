@@ -361,26 +361,25 @@ func (c *Client) stream(
 
 	client := http.Client{}
 
-		req, err := http.NewRequest("GET", fmt.Sprintf("%s?%s", baseURL, query.Encode()), nil)
-		if err != nil {
-			return errors.Wrap(err, "Error creating HTTP request")
-		}
-		req.Header.Set("Accept", "text/event-stream")
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s?%s", baseURL, query.Encode()), nil)
+	if err != nil {
+		return errors.Wrap(err, "Error creating HTTP request")
+	}
+	req.Header.Set("Accept", "text/event-stream")
 
-		// Make sure we don't use c.HTTP that can have Timeout set.
-		resp, err := client.Do(req)
-		if err != nil {
-			return errors.Wrap(err, "Error sending HTTP request")
-		}
-		if resp.StatusCode/100 != 2 {
-			return fmt.Errorf("Got bad HTTP status code %d", resp.StatusCode)
-		}
-		defer resp.Body.Close()
+	// Make sure we don't use c.HTTP that can have Timeout set.
+	resp, err := client.Do(req)
+	if err != nil {
+		return errors.Wrap(err, "Error sending HTTP request")
+	}
+	if resp.StatusCode/100 != 2 {
+		return fmt.Errorf("Got bad HTTP status code %d", resp.StatusCode)
+	}
+	defer resp.Body.Close()
 
-		reader := bufio.NewReader(resp.Body)
+	reader := bufio.NewReader(resp.Body)
 
-		for {
-
+	for {
 		// Read events one by one. Break this loop when there is no more data to be
 		// read from resp.Body (io.EOF).
 	Events:
