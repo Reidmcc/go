@@ -379,6 +379,8 @@ func (c *Client) stream(
 
 		reader := bufio.NewReader(resp.Body)
 
+		for {
+
 		// Read events one by one. Break this loop when there is no more data to be
 		// read from resp.Body (io.EOF).
 	Events:
@@ -463,7 +465,7 @@ func (c *Client) stream(
 				}
 			}
 		}
-		return nil
+	} 
 }
 
 // StreamLedgers streams incoming ledgers. Use context.WithCancel to stop streaming or
