@@ -464,7 +464,7 @@ func (c *Client) stream(
 				}
 			}
 		}
-	} 
+	}
 }
 
 // StreamLedgers streams incoming ledgers. Use context.WithCancel to stop streaming or
